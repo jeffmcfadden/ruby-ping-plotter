@@ -7,8 +7,6 @@
 #  http://rack.rubyforge.org/doc/classes/Rack/Builder.html
 require 'rubygems'
 require 'thin'
-require 'geokit'
-require 'houston'
 require 'json'
 require 'redis'
 require 'yaml'
