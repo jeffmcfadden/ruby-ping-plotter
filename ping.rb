@@ -18,22 +18,19 @@ hosts.each do |host|
 
   # The Pingers:
   threads << Thread.new {
-    p = Net::Ping::TCP.new(host, 'http')
     while true do
-      duration = -1
-      success  = p.ping?
-      duration = p.duration if success
+      res = `sudo ping -c 1 #{host}`
+      duration = /time=(\d+)/.match(res)[1].to_i rescue nil
+
+      success = duration != nil
 
       puts "#{Time.now} — #{host} :: Success: #{success}, Duration: #{duration}"
 
-      start_time = Time.now
       pings = JSON.parse( @redis.get( "pings-#{host}" ) )
       this_ping = [Time.now.to_i, success, duration]
       pings.push( this_ping )
       pings.shift if pings.size > 1000
       @redis.set( "pings-#{host}", pings.to_json )
-
-      # puts "    Duration: #{Time.now.to_f - start_time.to_f}"
 
       sleep 10
     end

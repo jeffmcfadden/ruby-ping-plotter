@@ -52,7 +52,7 @@ app = proc do |env|
     data = JSON.parse( redis.get( "pings-#{h}" ) )
 
     data.each do |d|
-      body += "\n          [new Date(#{d[0]}000), #{d[2] * 1000}],"
+      body += "\n          [new Date(#{d[0]}000), #{d[2]}],"
     end
 
     body += "\n        ]);"
