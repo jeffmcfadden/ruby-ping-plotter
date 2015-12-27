@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "\033]0;Ping Plotter Server\007"
+thin start -p 9988
